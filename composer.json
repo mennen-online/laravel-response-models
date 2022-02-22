@@ -1,5 +1,5 @@
 {
-  "name": "mennen-online/laravel-http-response-processor",
+  "name": "mennen-online/laravel-response-models",
   "description": "Convert Http JSON Responses in standard JSON Format",
   "require": {
     "php": "^8.0",
