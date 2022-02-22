@@ -1,8 +1,8 @@
 <?php
 
-namespace MennenOnline\LaravelHttpResponseProcessor\Tests;
+namespace MennenOnline\LaravelResponseModels\Tests;
 
-use MennenOnline\LaravelHttpResponseProcessor\MennenOnlineHttpResponseProcessorServiceProvider;
+use MennenOnline\LaravelResponseModels\MennenOnlineHttpResponseProcessorServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 class BaseTest extends TestCase

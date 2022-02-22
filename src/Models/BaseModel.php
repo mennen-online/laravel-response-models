@@ -1,6 +1,6 @@
 <?php
 
-namespace MennenOnline\LaravelHttpResponseProcessor\Models;
+namespace MennenOnline\LaravelResponseModels\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;

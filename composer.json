@@ -11,12 +11,12 @@
   },
   "autoload": {
     "psr-4": {
-      "MennenOnline\\LaravelHttpResponseProcessor\\": "src/"
+      "MennenOnline\\LaravelResponseModels\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "MennenOnline\\LaravelHttpResponseProcessor\\Tests\\": "tests/"
+      "MennenOnline\\LaravelResponseModels\\Tests\\": "tests/"
     }
   },
   "scripts": {

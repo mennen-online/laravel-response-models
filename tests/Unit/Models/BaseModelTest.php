@@ -1,9 +1,9 @@
 <?php
 
-namespace MennenOnline\LaravelHttpResponseProcessor\Tests\Unit\Models;
+namespace MennenOnline\LaravelResponseModels\Tests\Unit\Models;
 
-use MennenOnline\LaravelHttpResponseProcessor\Models\BaseModel;
-use MennenOnline\LaravelHttpResponseProcessor\Tests\BaseTest;
+use MennenOnline\LaravelResponseModels\Models\BaseModel;
+use MennenOnline\LaravelResponseModels\Tests\BaseTest;
 
 class BaseModelTest extends BaseTest
 {

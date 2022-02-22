@@ -1,6 +1,6 @@
 <?php
 
-namespace MennenOnline\LaravelHttpResponseProcessor;
+namespace MennenOnline\LaravelResponseModels;
 
 use Illuminate\Support\ServiceProvider;
 

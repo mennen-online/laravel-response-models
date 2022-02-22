@@ -17,7 +17,7 @@ composer require mennen-online/laravel-response-models
 Here's a little example how to create Response Models with this Package:
 
 ```php
-use MennenOnline\Models\BaseModel;
+use MennenOnline\LaravelResponseModels\Models\BaseModel;
 
 class PersonContact extends BaseModel {
     protected array $fieldMap = [

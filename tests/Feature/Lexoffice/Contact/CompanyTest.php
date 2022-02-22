@@ -1,11 +1,11 @@
 <?php
 
-namespace MennenOnline\LaravelHttpResponseProcessor\Tests\Feature\Lexoffice\Contact;
+namespace MennenOnline\LaravelResponseModels\Tests\Feature\Lexoffice\Contact;
 
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
-use MennenOnline\LaravelHttpResponseProcessor\Models\BaseModel;
-use MennenOnline\LaravelHttpResponseProcessor\Tests\BaseTest;
+use MennenOnline\LaravelResponseModels\Models\BaseModel;
+use MennenOnline\LaravelResponseModels\Tests\BaseTest;
 
 class CompanyTest extends BaseTest
 {
