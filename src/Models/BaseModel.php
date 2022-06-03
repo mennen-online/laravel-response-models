@@ -62,7 +62,7 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
     }
 
     public function __get(string $name) {
-        $methodName = 'get-'.Str::camel($name).'-attribute';
+        $methodName = Str::camel('get-'.$name.'-attribute');
         if (method_exists($this, $methodName)) {
             return $this->$methodName();
         } else {
@@ -71,7 +71,7 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
     }
 
     public function __set(string $name, $value): void {
-        $methodName = 'set-'.Str::camel($name).'-attribute';
+        $methodName = Str::camel('set-'.$name.'-attribute');
         if (method_exists($this, $methodName)) {
             $this->$methodName($value);
         } else {
