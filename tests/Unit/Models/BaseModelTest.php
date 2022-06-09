@@ -23,6 +23,8 @@ class BaseModelTest extends BaseTest
 
         $this->assertSame('TestData', $model->my_test_field);
 
+        $this->assertNull($model->non_existing_field);
+
         $this->assertCount(1, $model->getAttributes());
 
         $model = new class extends BaseModel {
@@ -114,5 +116,29 @@ class BaseModelTest extends BaseTest
         $this->assertSame('MY_UPPERCASE_CONTENT', $model->my_uppercase_field);
 
         $this->assertSame('my_lowercase_content', $model->my_lowercase_field);
+    }
+
+    public function testResponseModelCanHaveFieldsWithoutADefinedResponseField() {
+        $model = new class extends BaseModel {
+            protected array $fieldMap = [
+                'id',
+                'name',
+                'mappedField' => 'mapped_field'
+            ];
+        };
+
+        $data = [
+            'id' => 1,
+            'name' => 'some string',
+            'mappedField' => 'some mapped data'
+        ];
+
+        $model->fill($data);
+
+        $this->assertSame(1, $model->id);
+
+        $this->assertSame('some string', $model->name);
+
+        $this->assertSame('some mapped data', $model->mapped_field);
     }
 }

@@ -22,6 +22,12 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
      * e.g.
      *
      * myResponseField => my_response_field
+     *
+     * If a Field doesnt need to be remapped, simply fill it like key and not like above key = value
+     *
+     * id
+     *
+     *
      */
     protected array $fieldMap = [];
 
@@ -55,8 +61,13 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
     public function fill(array $attributes = []) {
         $attributes = self::convertToArrayRecursive($attributes);
         collect($this->fieldMap)->each(function($modelField, $responseKey) use($attributes) {
-            $content = Arr::get($attributes, $responseKey);
-            $this->attributes = Arr::add($this->attributes, $modelField, $content);
+            if(is_int($responseKey)) {
+                $content = Arr::get($attributes, $modelField);
+                $this->attributes = Arr::add($this->attributes, $modelField, $content);
+            }else {
+                $content = Arr::get($attributes, $responseKey);
+                $this->attributes = Arr::add($this->attributes, $modelField, $content);
+            }
         })->toArray();
         $this->attributes = $this->searchForNotSnakeKeys($this->attributes);
     }
