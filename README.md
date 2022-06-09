@@ -21,11 +21,11 @@ use MennenOnline\LaravelResponseModels\Models\BaseModel;
 
 class PersonContact extends BaseModel {
     protected array $fieldMap = [
-        'version' => 'version',
+        'version',
         'roles.customer.number' => 'customer_number',
         'roles.vendor.number' => 'vendor_number',
-        'person' => 'person',
-        'note' => 'note'    
+        'person',
+        'note'    
     ];   
 }
 ```

@@ -227,9 +227,9 @@ class CompanyTest extends BaseTest
 
 class CompanyContact extends BaseModel {
     protected array $fieldMap = [
-        'id' => 'id',
+        'id',
         'organizationId' => 'organization_id',
-        'version' => 'version',
+        'version',
         'roles.customer.number' => 'customer_number',
         'roles.vendor.number' => 'vendor_number',
         'company.name' => 'company.name',
@@ -242,7 +242,7 @@ class CompanyContact extends BaseModel {
         'xRechnung' => 'x_rechnung',
         'emailAddresses' => 'email_addresses',
         'phoneNumbers' => 'phone_numbers',
-        'note' => 'note',
-        'archived' => 'archived'
+        'note',
+        'archived'
     ];
 }
