@@ -128,9 +128,9 @@ class CompanyTest extends BaseTest
 
         $this->assertSame(1, $companyContact->version);
 
-        $this->assertSame(10307, $companyContact->customer_number);
+        $this->assertSame(10307, $companyContact->getRolesCustomerNumberAttribute());
 
-        $this->assertSame(70303, $companyContact->vendor_number);
+        $this->assertSame(70303, $companyContact->getRolesVendorNumberAttribute());
 
         $this->assertSame([
             'name' => 'Testfirma',

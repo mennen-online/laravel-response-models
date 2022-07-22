@@ -45,6 +45,15 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
         }
     }
 
+    public function __call(string $name, array $arguments) {
+        if(!method_exists($this, $name)) {
+            $attributeName = str($name)->replace('get', '')->replace('Attribute', '')->snake()->replace('_', '.')->toString();
+            return Arr::get($this->attributes, $attributeName) ?? $this->__get($attributeName);
+        }
+
+        return $this->$name($arguments);
+    }
+
     public static function convertToArrayRecursive(array|object $object): array {
         if(is_object($object)) {
             $object = (array)$object;
@@ -60,25 +69,31 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
 
     public function fill(array $attributes = []) {
         $attributes = self::convertToArrayRecursive($attributes);
-        collect($this->fieldMap)->each(function($modelField, $responseKey) use($attributes) {
-            if(is_int($responseKey)) {
-                $content = Arr::get($attributes, $modelField);
-                $this->attributes = Arr::add($this->attributes, $modelField, $content);
-            }else {
-                $content = Arr::get($attributes, $responseKey);
-                $this->attributes = Arr::add($this->attributes, $modelField, $content);
-            }
-        })->toArray();
-        $this->attributes = $this->searchForNotSnakeKeys($this->attributes);
+
+        $attributes = $this->searchForNotSnakeKeys($attributes);
+
+        $this->attributes = $attributes;
     }
 
     public function __get(string $name) {
-        $methodName = Str::camel('get-'.$name.'-attribute');
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName();
-        } else {
-            return $this->attributes[$name] ?? null;
+        if(str($name)->contains('.')) {
+            return Arr::get($this->attributes, $name);
         }
+        return $this->searchAndGetKey($this->attributes, $name);
+    }
+
+    private function searchAndGetKey(array $array, string $key) {
+        if(Arr::has($array, $key)) {
+            return $array[$key];
+        }
+
+        foreach($array as $subKey => $subValue) {
+            if(is_array($array[$subKey]) && $result = $this->searchAndGetKey($subValue, $key)) {
+                return $result;
+            }
+        }
+
+        return false;
     }
 
     public function __set(string $name, $value): void {

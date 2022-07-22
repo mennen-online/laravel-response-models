@@ -21,11 +21,12 @@ use MennenOnline\LaravelResponseModels\Models\BaseModel;
 
 class PersonContact extends BaseModel {
     protected array $fieldMap = [
-        'version',
         'roles.customer.number' => 'customer_number',
         'roles.vendor.number' => 'vendor_number',
-        'person',
-        'note'    
+        'person' => [
+            'first_name' => 'person_first_name',
+            'last_name' => 'person_last_name'
+        ] 
     ];   
 }
 ```
@@ -53,7 +54,7 @@ $personContact->version // 1
 
 $personContact->customer_number // 12345
 
-$personContact->person['first_name'] // Verena
+$personContact->__get('person.first_name') // Verena
 ```
 
 And so on.

@@ -9,9 +9,6 @@ class BaseModelTest extends BaseTest
 {
     public function testBaseModelConstructAndSetWithoutNestedFields() {
         $model = new class extends BaseModel {
-            protected array $fieldMap = [
-                'myResponseField' => 'my_test_field'
-            ];
         };
 
         $data = [
@@ -21,28 +18,20 @@ class BaseModelTest extends BaseTest
 
         $model->fill($data);
 
-        $this->assertSame('TestData', $model->my_test_field);
+        $this->assertSame('TestData', $model->my_response_field);
 
-        $this->assertNull($model->non_existing_field);
-
-        $this->assertCount(1, $model->getAttributes());
+        $this->assertCount(2, $model->getAttributes());
 
         $model = new class extends BaseModel {
-            protected array $fieldMap = [
-                'myResponseField' => 'my_test_field'
-            ];
         };
 
-        $model->my_test_field = 'TestData';
+        $model->my_response_field = 'TestData';
 
-        $this->assertSame('TestData', $model->my_test_field);
+        $this->assertSame('TestData', $model->my_response_field);
     }
 
     public function testBaseModelConstructAndSetWithNestedFields() {
         $model = new class extends BaseModel {
-            protected array $fieldMap = [
-                'myResponseField.myNestedField' => 'my_test_field'
-            ];
         };
 
         $data = [
@@ -54,9 +43,11 @@ class BaseModelTest extends BaseTest
 
         $model->fill($data);
 
-        $this->assertSame('TestData', $model->my_test_field);
+        $this->assertSame('TestData', $model->my_nested_field);
 
-        $this->assertCount(1, $model->getAttributes());
+        $this->assertSame('MissingData', $model->non_existing_field);
+
+        $this->assertCount(2, $model->getAttributes());
 
         $model = new class extends BaseModel {
             protected array $fieldMap = [
@@ -92,16 +83,11 @@ class BaseModelTest extends BaseTest
 
         $model->fill($data);
 
-        $this->assertSame('MY_UPPERCASE_CONTENT', $model->my_uppercase_field);
+        $this->assertSame('MY_UPPERCASE_CONTENT', $model->my_lowercase_response);
 
-        $this->assertSame('my_lowercase_content', $model->my_lowercase_field);
+        $this->assertSame('my_lowercase_content', $model->my_uppercase_response);
 
         $model = new class extends BaseModel {
-            protected array $fieldMap = [
-                'myLowercaseResponse' => 'my_uppercase_field',
-                'myUppercaseResponse' => 'my_lowercase_field'
-            ];
-
             public function getMyUppercaseField($value) {
                 $this->attributes['my_uppercase_field'] = str($value)->upper();
             }
@@ -113,9 +99,9 @@ class BaseModelTest extends BaseTest
 
         $model->fill($data);
 
-        $this->assertSame('MY_UPPERCASE_CONTENT', $model->my_uppercase_field);
+        $this->assertSame('MY_UPPERCASE_CONTENT', $model->my_lowercase_response);
 
-        $this->assertSame('my_lowercase_content', $model->my_lowercase_field);
+        $this->assertSame('my_lowercase_content', $model->my_uppercase_response);
     }
 
     public function testResponseModelCanHaveFieldsWithoutADefinedResponseField() {

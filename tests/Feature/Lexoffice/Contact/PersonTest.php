@@ -42,15 +42,15 @@ class PersonTest extends BaseTest
 
         $this->assertSame(0, $personContact->version);
 
-        $this->assertSame(67890, $personContact->vendor_number);
+        $this->assertSame(67890, $personContact->getRolesVendorNumberAttribute());
 
-        $this->assertSame(12345, $personContact->customer_number);
+        $this->assertSame(12345, $personContact->getRolesCustomerNumberAttribute());
 
-        $this->assertSame('Frau', $personContact->person['salutation']);
+        $this->assertSame('Frau', $personContact->__get('person.salutation'));
 
-        $this->assertSame('Inge', $personContact->person['first_name']);
+        $this->assertSame('Inge', $personContact->__get('person.first_name'));
 
-        $this->assertSame('Musterfrau', $personContact->person['last_name']);
+        $this->assertSame('Musterfrau', $personContact->__get('person.last_name'));
 
         $this->assertSame('Notizen', $personContact->note);
     }
@@ -59,10 +59,11 @@ class PersonTest extends BaseTest
 class PersonContact extends BaseModel
 {
     protected array $fieldMap = [
-        'version',
         'roles.customer.number' => 'customer_number',
         'roles.vendor.number' => 'vendor_number',
-        'person',
-        'note'
+        'person' => [
+            'first_name' => 'person_first_name',
+            'last_name' => 'person_last_name'
+        ]
     ];
 }
