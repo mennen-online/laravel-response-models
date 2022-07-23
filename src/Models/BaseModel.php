@@ -3,6 +3,7 @@
 namespace MennenOnline\LaravelResponseModels\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JsonSerializable;
@@ -10,10 +11,8 @@ use ReturnTypeWillChange;
 use Stringable;
 use TypeError;
 
-abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
+abstract class BaseModel extends Model implements Arrayable, JsonSerializable, Stringable
 {
-    protected array $attributes = [];
-
     /*
      * Define your Response Conversion below in following Scheme:
      *
@@ -33,25 +32,25 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
 
     protected array $removeAfterFill = [];
 
-    protected array $casts = [];
-
     public function __construct(array|object $attributes = []) {
         if(is_object($attributes)) {
             $attributes = (array)$attributes;
         }
+
+        parent::__construct($attributes);
 
         if (!empty($attributes)) {
             $this->fill($attributes);
         }
     }
 
-    public function __call(string $name, array $arguments) {
-        if(!method_exists($this, $name)) {
-            $attributeName = str($name)->replace('get', '')->replace('Attribute', '')->snake()->replace('_', '.')->toString();
+    public function __call($method, $parameters) {
+        if(!method_exists($this, $method)) {
+            $attributeName = str($method)->replace('get', '')->replace('Attribute', '')->snake()->replace('_', '.')->toString();
             return Arr::get($this->attributes, $attributeName) ?? $this->__get($attributeName);
         }
 
-        return $this->$name($arguments);
+        return $this->$method($parameters);
     }
 
     public static function convertToArrayRecursive(array|object $object): array {
@@ -75,7 +74,7 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
         $this->attributes = $attributes;
     }
 
-    public function __get(string $name) {
+    public function __get($name) {
         if(str($name)->contains('.')) {
             return Arr::get($this->attributes, $name);
         }
@@ -96,7 +95,7 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
         return false;
     }
 
-    public function __set(string $name, $value): void {
+    public function __set($name, $value): void {
         $methodName = Str::camel('set-'.$name.'-attribute');
         if (method_exists($this, $methodName)) {
             $this->$methodName($value);
@@ -113,7 +112,7 @@ abstract class BaseModel implements Arrayable, JsonSerializable, Stringable
         return json_encode($this->attributes);
     }
 
-    #[ReturnTypeWillChange] public function jsonSerialize() {
+    #[ReturnTypeWillChange] public function jsonSerialize(): array {
         return serialize($this->attributes);
     }
 
