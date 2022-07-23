@@ -112,10 +112,6 @@ abstract class BaseModel extends Model implements Arrayable, JsonSerializable, S
         return json_encode($this->attributes);
     }
 
-    #[ReturnTypeWillChange] public function jsonSerialize(): array {
-        return serialize($this->attributes);
-    }
-
     public function getAttributes(): array {
         return $this->attributes;
     }
