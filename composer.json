@@ -6,6 +6,13 @@
     "guzzlehttp/guzzle": "^7.0.0",
     "ext-json": "*"
   },
+  "authors": [
+    {
+      "name": "Hendrik Mennen",
+      "email": "hmennen90@gmail.com",
+      "role": "Developer"
+    }
+  ],
   "require-dev": {
     "orchestra/testbench": "^7.0"
   },
